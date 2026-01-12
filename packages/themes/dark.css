@@ -1,0 +1,463 @@
+/**
+ * @chatter/themes - Dark Theme (Static)
+ *
+ * Import this file for dark theme only (no light mode support).
+ * For automatic dark mode support, use 'auto.css' instead.
+ *
+ * Usage:
+ *   import '@chatter/themes/dark.css';
+ *
+ * Recommended:
+ *   import '@chatter/themes/auto.css'; // Auto light/dark switching
+ */
+
+:root {
+  /* Base palette */
+  --chatter-primary: #3b82f6;
+  --chatter-primary-hover: #60a5fa;
+  --chatter-text: #f5f5f5;
+  --chatter-text-muted: #a3a3a3;
+  --chatter-bg: #171717;
+  --chatter-bg-secondary: #262626;
+  --chatter-border: #404040;
+  --chatter-error: #f87171;
+
+  /* Semantic: User messages */
+  --chatter-user-bg: var(--chatter-primary);
+  --chatter-user-fg: #ffffff;
+
+  /* Semantic: Bot messages */
+  --chatter-bot-bg: var(--chatter-bg-secondary);
+  --chatter-bot-fg: var(--chatter-text);
+
+  /* Semantic: Code blocks */
+  --chatter-code-bg: #0d0d0d;
+  --chatter-code-fg: #d4d4d4;
+  --chatter-code-header-bg: #1a1a1a;
+
+  /* Semantic: Collapsible sections */
+  --chatter-collapsible-bg: rgba(38, 38, 38, 0.5);
+  --chatter-collapsible-border: var(--chatter-border);
+  --chatter-collapsible-header-hover: rgba(255, 255, 255, 0.05);
+
+  /* Semantic: Attachments */
+  --chatter-attachment-bg: rgba(255, 255, 255, 0.1);
+
+  /* Layout */
+  --chatter-bubble-radius: 1rem;
+  --chatter-max-width: 85%;
+  --chatter-avatar-size: 36px;
+  --chatter-spacing-xs: 0.25rem;
+  --chatter-spacing-sm: 0.5rem;
+  --chatter-spacing-md: 1rem;
+  --chatter-spacing-lg: 1.5rem;
+
+  /* Typography */
+  --chatter-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --chatter-font-size-xs: 0.75rem;
+  --chatter-font-size-sm: 0.875rem;
+  --chatter-font-size-md: 1rem;
+
+  /* Transitions */
+  --chatter-transition-fast: 150ms ease;
+  --chatter-transition-normal: 200ms ease;
+}
+
+/* =============================================================================
+   COMPONENT STYLES
+   ============================================================================= */
+
+/* Container */
+.chatter-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--chatter-spacing-md);
+  padding: var(--chatter-spacing-md);
+  padding-bottom: 2rem;
+  overflow-y: auto;
+  font-family: var(--chatter-font-family);
+  font-size: var(--chatter-font-size-md);
+  color: var(--chatter-text);
+  background: var(--chatter-bg);
+}
+
+/* Bubble container */
+.chatter-bubble-container {
+  display: flex;
+  gap: var(--chatter-spacing-sm);
+  max-width: var(--chatter-max-width);
+}
+
+.chatter-bubble-container.user {
+  flex-direction: row-reverse;
+  margin-left: auto;
+}
+
+.chatter-bubble-container.bot {
+  margin-right: auto;
+}
+
+.chatter-bubble-container.grouped {
+  margin-top: calc(-1 * var(--chatter-spacing-sm));
+}
+
+.chatter-bubble-container.grouped .chatter-avatar {
+  visibility: hidden;
+}
+
+/* Avatar */
+.chatter-avatar {
+  flex-shrink: 0;
+  width: var(--chatter-avatar-size);
+  height: var(--chatter-avatar-size);
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.chatter-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.chatter-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--chatter-bg-secondary);
+  color: var(--chatter-text-muted);
+  font-weight: 600;
+  font-size: var(--chatter-font-size-sm);
+}
+
+/* Bubble */
+.chatter-bubble {
+  padding: var(--chatter-spacing-sm) var(--chatter-spacing-md);
+  border-radius: var(--chatter-bubble-radius);
+  word-break: break-word;
+}
+
+.chatter-bubble.user {
+  background: var(--chatter-user-bg);
+  color: var(--chatter-user-fg);
+  border-bottom-right-radius: var(--chatter-spacing-xs);
+}
+
+.chatter-bubble.bot {
+  background: var(--chatter-bot-bg);
+  color: var(--chatter-bot-fg);
+  border-bottom-left-radius: var(--chatter-spacing-xs);
+}
+
+.chatter-bubble-text {
+  white-space: pre-wrap;
+}
+
+.chatter-bubble-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--chatter-spacing-xs);
+  margin-top: var(--chatter-spacing-xs);
+  font-size: var(--chatter-font-size-xs);
+  opacity: 0.7;
+}
+
+/* Delivery indicator */
+.chatter-delivery-indicator {
+  font-size: var(--chatter-font-size-xs);
+}
+
+.chatter-delivery-indicator.pending {
+  opacity: 0.7;
+}
+
+.chatter-delivery-indicator.delivered {
+  opacity: 1;
+}
+
+.chatter-delivery-indicator.failed {
+  color: var(--chatter-error);
+}
+
+.chatter-bubble.user .chatter-delivery-indicator.delivered,
+.chatter-bubble.user .chatter-delivery-indicator.pending {
+  color: inherit;
+}
+
+.chatter-bubble.bot .chatter-delivery-indicator.delivered {
+  color: var(--chatter-primary);
+}
+
+.chatter-bubble.bot .chatter-delivery-indicator.pending {
+  color: var(--chatter-text-muted);
+}
+
+/* Attachments */
+.chatter-attachments {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--chatter-spacing-sm);
+  margin-top: var(--chatter-spacing-sm);
+}
+
+.chatter-attachment-preview {
+  border-radius: var(--chatter-spacing-sm);
+  overflow: hidden;
+}
+
+.chatter-attachment-preview.image img {
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.chatter-attachment-preview.file {
+  display: flex;
+  align-items: center;
+  gap: var(--chatter-spacing-xs);
+  padding: var(--chatter-spacing-xs) var(--chatter-spacing-sm);
+  background: var(--chatter-attachment-bg);
+  font-size: var(--chatter-font-size-sm);
+}
+
+/* Rich content */
+.chatter-rich-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--chatter-spacing-md);
+}
+
+.chatter-block {
+  border-radius: var(--chatter-spacing-sm);
+}
+
+.chatter-block.code {
+  background: var(--chatter-code-bg);
+  color: var(--chatter-code-fg);
+  overflow: hidden;
+}
+
+.chatter-code-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--chatter-spacing-xs) var(--chatter-spacing-sm);
+  background: var(--chatter-code-header-bg);
+  font-size: var(--chatter-font-size-xs);
+}
+
+.chatter-code-language {
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.chatter-code-toggle {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: var(--chatter-font-size-xs);
+  opacity: 0.7;
+}
+
+.chatter-code-toggle:hover {
+  opacity: 1;
+}
+
+.chatter-block.code pre {
+  margin: 0;
+  padding: var(--chatter-spacing-sm);
+  overflow-x: auto;
+  font-family: 'SF Mono', Monaco, 'Consolas', monospace;
+  font-size: var(--chatter-font-size-sm);
+}
+
+.chatter-block.code pre.collapsed {
+  max-height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+
+.chatter-block.code pre.collapsed::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: linear-gradient(transparent, var(--chatter-code-bg));
+}
+
+.chatter-block.image {
+  display: flex;
+  flex-direction: column;
+  gap: var(--chatter-spacing-xs);
+}
+
+.chatter-block.image img {
+  max-width: 100%;
+  border-radius: var(--chatter-spacing-sm);
+}
+
+.chatter-image-caption {
+  font-size: var(--chatter-font-size-sm);
+  color: var(--chatter-text-muted);
+}
+
+/* Streaming indicator */
+.chatter-streaming-indicator {
+  display: flex;
+  gap: var(--chatter-spacing-xs);
+  padding: var(--chatter-spacing-sm);
+}
+
+.chatter-streaming-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--chatter-text-muted);
+  animation: chatter-pulse 1.4s infinite ease-in-out both;
+}
+
+.chatter-streaming-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.chatter-streaming-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes chatter-pulse {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Collapsible section */
+.chatter-collapsible-section {
+  border: 1px solid var(--chatter-collapsible-border);
+  border-radius: var(--chatter-spacing-sm);
+  overflow: hidden;
+}
+
+.chatter-section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--chatter-spacing-sm);
+  width: 100%;
+  padding: var(--chatter-spacing-sm) var(--chatter-spacing-md);
+  background: var(--chatter-collapsible-bg);
+  border: none;
+  cursor: pointer;
+  font-size: var(--chatter-font-size-sm);
+  font-family: inherit;
+  color: inherit;
+  text-align: left;
+  transition: background var(--chatter-transition-fast);
+}
+
+.chatter-section-header:hover {
+  background: var(--chatter-collapsible-header-hover);
+}
+
+.chatter-section-title {
+  flex: 1;
+  font-weight: 500;
+}
+
+.chatter-section-count {
+  padding: 2px 6px;
+  background: var(--chatter-bg-secondary);
+  border-radius: 10px;
+  font-size: var(--chatter-font-size-xs);
+  color: var(--chatter-text-muted);
+}
+
+.chatter-section-content {
+  padding: var(--chatter-spacing-sm);
+}
+
+.chatter-expand-controls {
+  display: flex;
+  gap: var(--chatter-spacing-sm);
+  margin-bottom: var(--chatter-spacing-sm);
+  font-size: var(--chatter-font-size-xs);
+}
+
+.chatter-expand-controls button {
+  background: none;
+  border: none;
+  color: var(--chatter-primary);
+  cursor: pointer;
+  font-size: inherit;
+}
+
+.chatter-expand-controls button:hover {
+  text-decoration: underline;
+}
+
+.chatter-section-items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--chatter-spacing-xs);
+}
+
+.chatter-collapsible-item {
+  border: 1px solid var(--chatter-border);
+  border-radius: var(--chatter-spacing-xs);
+  overflow: hidden;
+}
+
+.chatter-item-header {
+  display: flex;
+  align-items: center;
+  gap: var(--chatter-spacing-sm);
+  width: 100%;
+  padding: var(--chatter-spacing-xs) var(--chatter-spacing-sm);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: var(--chatter-font-size-sm);
+  font-family: inherit;
+  color: inherit;
+  text-align: left;
+  transition: background var(--chatter-transition-fast);
+}
+
+.chatter-item-header:hover {
+  background: var(--chatter-collapsible-header-hover);
+}
+
+.chatter-item-title {
+  flex: 1;
+}
+
+.chatter-item-badge {
+  padding: 2px 6px;
+  background: var(--chatter-primary);
+  color: white;
+  border-radius: 10px;
+  font-size: var(--chatter-font-size-xs);
+}
+
+.chatter-item-body {
+  padding: var(--chatter-spacing-sm);
+  border-top: 1px solid var(--chatter-border);
+}
+
+/* Chevron icon */
+.chatter-chevron {
+  flex-shrink: 0;
+  transition: transform var(--chatter-transition-fast);
+}
+
+.chatter-chevron.expanded {
+  transform: rotate(90deg);
+}

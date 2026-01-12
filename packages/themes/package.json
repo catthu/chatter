@@ -1,0 +1,21 @@
+{
+  "name": "@chatter/themes",
+  "version": "0.1.0",
+  "description": "CSS themes for @chatter chat SDK",
+  "main": "./default.css",
+  "exports": {
+    ".": "./default.css",
+    "./default.css": "./default.css",
+    "./dark.css": "./dark.css"
+  },
+  "files": [
+    "*.css"
+  ],
+  "keywords": [
+    "chat",
+    "themes",
+    "css",
+    "styling"
+  ],
+  "license": "MIT"
+}

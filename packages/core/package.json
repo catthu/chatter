@@ -1,0 +1,38 @@
+{
+  "name": "@chatter/core",
+  "version": "0.1.0",
+  "description": "Headless chat SDK core - framework-agnostic state management, ordering, streaming",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch",
+    "lint": "eslint src/",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0"
+  },
+  "peerDependencies": {},
+  "keywords": [
+    "chat",
+    "messaging",
+    "realtime",
+    "websocket",
+    "streaming"
+  ],
+  "license": "MIT"
+}
