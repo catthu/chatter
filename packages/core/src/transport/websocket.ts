@@ -99,7 +99,7 @@ export class WebSocketTransport implements Transport {
           }
         };
 
-        this.ws.onerror = (error) => {
+        this.ws.onerror = () => {
           if (this.status === 'connecting') {
             reject(new Error('WebSocket connection failed'));
           }

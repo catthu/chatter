@@ -148,10 +148,16 @@ export function useChatSession(config: UseChatSessionConfig): UseChatSessionResu
     [sessionId, onMessage]
   );
 
+  // Store cleanup functions for subscriptions
+  const cleanupRef = useRef<(() => void) | null>(null);
+
   // Connect to session
-  const connect = useCallback(async () => {
+  const connect = useCallback(async (): Promise<void> => {
     const transport = transportRef.current;
     if (!transport) return;
+
+    // Clean up any existing subscriptions
+    cleanupRef.current?.();
 
     // Subscribe to status changes
     const statusUnsub = transport.onStatusChange((newStatus) => {
@@ -162,35 +168,33 @@ export function useChatSession(config: UseChatSessionConfig): UseChatSessionResu
     // Subscribe to session events
     const eventUnsub = transport.subscribe(sessionId, handleEvent);
 
+    // Store cleanup
+    cleanupRef.current = () => {
+      statusUnsub();
+      eventUnsub();
+    };
+
     try {
       await transport.connect();
     } catch (error) {
       console.error('[useChatSession] Connection failed:', error);
       setStatus('error');
     }
-
-    return () => {
-      statusUnsub();
-      eventUnsub();
-    };
   }, [sessionId, handleEvent, onStatusChange]);
 
   // Disconnect from session
   const disconnect = useCallback(() => {
+    cleanupRef.current?.();
+    cleanupRef.current = null;
     transportRef.current?.disconnect();
     setStatus('disconnected');
   }, []);
 
   // Auto-connect on mount
   useEffect(() => {
-    let cleanup: (() => void) | undefined;
-
-    connect().then((unsub) => {
-      cleanup = unsub;
-    });
+    connect();
 
     return () => {
-      cleanup?.();
       disconnect();
     };
   }, [connect, disconnect]);

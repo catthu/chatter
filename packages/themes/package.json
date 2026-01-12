@@ -6,16 +6,24 @@
   "exports": {
     ".": "./default.css",
     "./default.css": "./default.css",
-    "./dark.css": "./dark.css"
+    "./dark.css": "./dark.css",
+    "./auto.css": "./auto.css"
   },
   "files": [
     "*.css"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catthu/chatter.git",
+    "directory": "packages/themes"
+  },
+  "homepage": "https://github.com/catthu/chatter#readme",
   "keywords": [
     "chat",
     "themes",
     "css",
-    "styling"
+    "styling",
+    "dark-mode"
   ],
   "license": "MIT"
 }

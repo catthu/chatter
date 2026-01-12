@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 export interface UseCollapsibleOptions {
   /** Default expanded state for new items */

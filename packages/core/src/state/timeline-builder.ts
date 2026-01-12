@@ -115,16 +115,19 @@ export class DefaultTimelineBuilder implements TimelineBuilder {
     } = params;
 
     // Convert messages to timeline items
-    const messageItems: TimelineItem[] = messages.map((msg) => ({
+    // Using type assertion as messages should conform to TextMessage | RichMessage
+    const messageItems = messages.map((msg) => ({
       ...msg,
       itemType: 'message' as const,
-    }));
+    })) as TimelineItem[];
 
     // Convert events to timeline items
-    const eventItems: TimelineItem[] = events.map((evt) => ({
+    // Using type assertion as events should conform to SystemEvent
+    const eventItems = events.map((evt) => ({
       ...evt,
+      data: evt.data as Record<string, unknown> | undefined,
       itemType: 'event' as const,
-    }));
+    })) as TimelineItem[];
 
     // Combine all items
     const allItems = [...messageItems, ...eventItems];
